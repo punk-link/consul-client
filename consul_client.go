@@ -13,12 +13,17 @@ import (
 type ConsulClient struct {
 }
 
-func New(config ConsulConfig) (*ConsulClient, error) {
+func New(config *ConsulConfig) (*ConsulClient, error) {
 	_fullStorageName = getFullStorageName(config.StorageName)
+
+	var scheme string
+	if config.Scheme == "" {
+		scheme = "http"
+	}
 
 	client, err := api.NewClient(&api.Config{
 		Address: config.Address,
-		Scheme:  config.Scheme,
+		Scheme:  scheme,
 		Token:   config.Token,
 	})
 	if err == nil {

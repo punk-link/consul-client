@@ -2,7 +2,7 @@ package consulclient
 
 type ConsulConfig struct {
 	Address     string
-	StorageName string
 	Scheme      string
+	StorageName string
 	Token       string
 }
