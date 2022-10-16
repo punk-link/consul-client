@@ -7,14 +7,13 @@ import (
 	"time"
 
 	"github.com/hashicorp/consul/api"
-	envManager "github.com/punk-link/environment-variable-manager"
 )
 
 type ConsulClient struct {
 }
 
 func New(config *ConsulConfig) (*ConsulClient, error) {
-	_fullStorageName = getFullStorageName(config.StorageName)
+	_fullStorageName = fmt.Sprintf("/%s/%s", strings.ToLower(config.EnvironmentName), strings.ToLower(config.StorageName))
 
 	var scheme string
 	if config.Scheme == "" {
@@ -70,23 +69,6 @@ func (service *ConsulClient) GetOrSet(key string, period time.Duration) (any, er
 	}
 
 	return value, nil
-}
-
-func getEnvironmentName() string {
-	isExist, name := envManager.TryGetEnvironmentVariable("GO_ENVIRONMENT")
-	if !isExist {
-		return "Development"
-	}
-
-	return name
-}
-
-func getFullStorageName(storageName string) string {
-	name := getEnvironmentName()
-	lowerCasedName := strings.ToLower(name)
-	lowerCasedStorageName := strings.ToLower(storageName)
-
-	return fmt.Sprintf("/%s/%s", lowerCasedName, lowerCasedStorageName)
 }
 
 var _fullStorageName string

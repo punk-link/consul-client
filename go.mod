@@ -2,10 +2,7 @@ module github.com/punk-link/consul-client
 
 go 1.19
 
-require (
-	github.com/hashicorp/consul/api v1.15.2
-	github.com/punk-link/environment-variable-manager v1.0.0
-)
+require github.com/hashicorp/consul/api v1.15.2
 
 require (
 	github.com/armon/go-metrics v0.3.10 // indirect
